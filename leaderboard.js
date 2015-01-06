@@ -34,6 +34,14 @@ if(Meteor.isClient){
             // $inc = increments
             // $set = sets the value
             playersList.update({_id: currentPlayer}, {$inc: {score: 5}});
+        },
+        'click #decrement': function() {
+            var selectedPlayer = Session.get('selectedPlayer');
+            playersList.update({_id: selectedPlayer}, {$inc: {score: -5}});
+        },
+        'click #remove': function() {
+            var selectedPlayer = Session.get('selectedPlayer');
+            playersList.remove(selectedPlayer);
         }
     })
 }
