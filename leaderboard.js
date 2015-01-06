@@ -43,7 +43,20 @@ if(Meteor.isClient){
             var selectedPlayer = Session.get('selectedPlayer');
             playersList.remove(selectedPlayer);
         }
-    })
+    });
+
+    Template.addPlayerForm.events({
+        'submit form': function(event, template) {
+            event.preventDefault();
+            console.log(event.type);
+            var playerName = template.find('#playerName').value;
+            console.log(playerName);
+            playersList.insert({
+                name: playerName,
+                score: 0
+            })
+        }
+    });
 }
 
 
