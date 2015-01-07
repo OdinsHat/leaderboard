@@ -4,6 +4,9 @@ playersList = new Meteor.Collection('players');
 // To get rid of these ugly conditionals we can place client code into a 
 // "client" folder.
 if(Meteor.isClient){
+
+    Meteor.subscribe('thePlayers');
+
     Template.leaderboard.helpers({
         player: function() {
             return playersList.find({}, {sort: {score: -1, name: 1}});
