@@ -37,15 +37,15 @@ if(Meteor.isClient){
             var currentPlayer = Session.get('selectedPlayer');
             // $inc = increments
             // $set = sets the value
-            playersList.update({_id: currentPlayer}, {$inc: {score: 5}});
+            Meteor.call('updateScore', currentPlayer, 5);
+            
         },
         'click #decrement': function() {
             var selectedPlayer = Session.get('selectedPlayer');
-            playersList.update({_id: selectedPlayer}, {$inc: {score: -5}});
+            Meteor.call('updateScore', selectedPlayer, -5);
         },
         'click #remove': function() {
             var selectedPlayer = Session.get('selectedPlayer');
-            //playersList.remove(selectedPlayer);
             Meteor.call('removePlayer', selectedPlayer);
         }
     });
@@ -87,6 +87,9 @@ if(Meteor.isServer){
         },
         'removePlayer': function(playerId) {
             playersList.remove(playerId);
+        },
+        'updateScore': function(currentPlayer, scoreChange) {
+            playersList.update({_id: currentPlayer}, {$inc: {score: scoreChange}});
         }
     });
 }
