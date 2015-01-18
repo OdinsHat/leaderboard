@@ -9,6 +9,7 @@ if(Meteor.isClient){
 
     Template.leaderboard.helpers({
         player: function() {
+            var currentUserId = Meteor.userId();
             return playersList.find({}, {sort: {score: -1, name: 1}});
         },
         selectedClass: function() {
