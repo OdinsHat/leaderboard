@@ -44,20 +44,17 @@ if(Meteor.isClient){
         },
         'click #remove': function() {
             var selectedPlayer = Session.get('selectedPlayer');
-            playersList.remove(selectedPlayer);
+            //playersList.remove(selectedPlayer);
+            Meteor.call('removePlayer', selectedPlayer);
         }
     });
 
     Template.addPlayerForm.events({
         'submit form': function(event, template) {
             event.preventDefault();
-            console.log(event.type);
             var playerName = template.find('#playerName').value;
-            console.log(playerName);
-            playersList.insert({
-                name: playerName,
-                score: 0
-            })
+
+            Meteor.call('insertPlayerData', playerName);
         }
     });
 }
@@ -66,5 +63,22 @@ if(Meteor.isClient){
 // As with the conditional above w can be rid of this by putting all 
 // server code into its own folder called "server".
 if(Meteor.isServer){
-    console.log('Hello server');
+    Meteor.publish('thePlayers', function(){
+        var currentUserId = this.userId;
+        return playersList.find({createdBy: currentUserId});
+    });
+
+    Meteor.methods({
+        'insertPlayerData': function(playerName) {
+            var currentUserId = Meteor.userId();
+            playersList.insert({
+                name: playerName,
+                score: 0,
+                createdBy: currentUserId
+            });
+        },
+        'removePlayer': function(playerId) {
+            playersList.remove(playerId);
+        }
+    });
 }
