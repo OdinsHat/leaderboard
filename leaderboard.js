@@ -51,9 +51,16 @@ if(Meteor.isClient){
     });
 
     Template.addPlayerForm.events({
-        'submit form': function(event, template) {
+        'submit form': function(event) {
             event.preventDefault();
-            var playerName = template.find('#playerName').value;
+
+            // If your field has a name attribute then you can get rid of 
+            // the template call above and use the line below to access 
+            // its value
+            var playerName = event.target.playerName.value;
+
+            // Not the best way
+            //var playerName = template.find('#playerName').value;
 
             Meteor.call('insertPlayerData', playerName);
         }
