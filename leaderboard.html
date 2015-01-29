@@ -1,11 +1,16 @@
 <head>
-    <title>Leaderboard</title>
+    <title>TyrBoard</title>
 </head>
 <body>
-    <h1>Leaderboard</h1>
+    <h1>TyrBoard</h1>
     {{> loginButtons }}
     {{> leaderboard }}
     {{> addPlayerForm }}
+
+    <footer>
+        <p>Copyright Miyamoto Musashi</p>
+        <blockquote>It is difficult to realise the true Way just through sword-fencing. Know the smallest things and the biggest things, the shallowest things and the deepest things<cite>Miyamoto Musashi</cite></blockquote> 
+    </footer>
 </body>
 
 <template name="leaderboard">
@@ -27,7 +32,7 @@
 <template name="addPlayerForm">
 {{#if currentUser}}
 <form>
-<input name="playerName" name="playerName" id="playerName" />
+<input name="playerName" id="playerName" />
 <input type="submit" value="Add Player" />
 </form>
 {{/if}}
